@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= content_for(:title) || "Расходы на коммунальные услуги" %></title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <%# Подключение таблиц стилей %>
+  <%= stylesheet_link_tag :app %>
+
+  <%# Значки %>
+  <link rel="icon" href="/icon.png" type="image/png">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/icon.png">
+</head>
+
+<body>
+
+
+  <nav style="background: #eee; padding: 1em; display: flex; gap: 1em;">
+    <%= link_to "🏠 Главная", root_path %>
+    <%= link_to "⚡ Коммунальные расходы", utility_readings_path %>
+    <%= link_to "🧻 Закупки материалов", material_purchases_path %>
+    <%= link_to "📅 Отчёты по месяцам", monthly_reports_path %>
+    <%= link_to "📅 Отчёт за год", yearly_report_path %>
+  </nav>
+
+  <%= yield %>
+  <% if flash[:notice] %>
+    <div style="background: #dff0d8; padding: 10px; border: 1px solid #3c763d; margin-bottom: 10px;">
+      ✅ <%= flash[:notice] %>
+    </div>
+  <% end %>
+
+  <% if flash[:alert] %>
+    <div style="background: #f2dede; padding: 10px; border: 1px solid #a94442; margin-bottom: 10px;">
+      ⚠️ <%= flash[:alert] %>
+    </div>
+  <% end %>
+</body>
+</html>

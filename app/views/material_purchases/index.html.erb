@@ -1,0 +1,30 @@
+<table>
+  <thead>
+    <tr>
+      <th>Наименование</th>
+      <th>Дата</th>
+      <th>Количество</th>
+      <th>Цена за единицу</th>
+      <th>Сумма</th>
+      <th>Действия</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @material_purchases.each do |purchase| %>
+      <tr>
+        <td><%= purchase.item %></td>
+        <td><%= purchase.date %></td>
+        <td><%= purchase.quantity %></td>
+        <td><%= purchase.unit_price %></td>
+        <td><%= purchase.total_cost %></td>
+        <td>
+          <%= link_to "✏️", edit_material_purchase_path(purchase) %>
+          <%= button_to "🗑 Удалить", material_purchase_path(purchase),
+                        method: :delete,
+                        data: { confirm: "Удалить запись?" },
+                        form: { style: "display:inline" } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

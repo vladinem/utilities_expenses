@@ -1,0 +1,39 @@
+<%= form_with model: utility_reading, local: true do |form| %>
+
+  <div>
+    <%= form.label :resource, "Ресурс" %><br>
+    <%= form.text_field :resource %>
+  </div>
+
+  <div>
+    <%= form.label :date, "Дата" %><br>
+    <%= form.date_field :date %>
+  </div>
+
+  <div>
+    <%= form.label :value, "Объём" %><br>
+    <%= form.number_field :value, step: 0.01 %>
+  </div>
+
+  <div>
+    <%= form.label :unit_price, "Цена за единицу" %><br>
+    <%= form.number_field :unit_price, step: 0.01 %>
+  </div>
+
+  <% if utility_reading.errors.any? %>
+  <div class="errors">
+    <h4>Ошибки:</h4>
+    <ul>
+      <% utility_reading.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+  <div>
+    <%= form.submit "Сохранить" %>
+  </div>
+<% end %>
+<%= link_to "← Назад", utility_readings_path %>
+

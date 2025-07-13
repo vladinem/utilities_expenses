@@ -1,0 +1,66 @@
+<h1>Отчёт за <%= "#{@month.to_s.rjust(2, '0')}.#{@year}" %></h1>
+
+<%= form_with url: monthly_reports_path, method: :get, local: true do |f| %>
+  <div style="display: flex; gap: 1em;">
+    <div>
+      <%= label_tag :month, "Месяц" %>
+      <%= select_tag :month, options_for_select((1..12).map { |m| [Date::MONTHNAMES[m], m] }, @month) %>
+    </div>
+    <div>
+      <%= label_tag :year, "Год" %>
+      <%= number_field_tag :year, @year %>
+    </div>
+    <div style="align-self: flex-end;">
+      <%= submit_tag "Показать" %>
+    </div>
+  </div>
+<% end %>
+
+<hr>
+
+<h2>Коммунальные расходы</h2>
+<div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.5em;">
+  <strong>Дата</strong>
+  <strong>Ресурс</strong>
+  <strong>Объём</strong>
+  <strong>Цена</strong>
+  <strong>Сумма</strong>
+
+  <% @utility_readings.each do |r| %>
+    <div><%= r.date %></div>
+    <div><%= r.resource %></div>
+    <div><%= r.value %></div>
+    <div><%= r.unit_price %></div>
+    <div><%= r.total_cost %></div>
+  <% end %>
+</div>
+
+<p><strong>Итого: <%= @total_utilities %> </strong></p>
+
+<hr>
+
+<h2>Закупки материалов</h2>
+<div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.5em;">
+  <strong>Дата</strong>
+  <strong>Наименование</strong>
+  <strong>Количество</strong>
+  <strong>Цена</strong>
+  <strong>Сумма</strong>
+
+  <% @material_purchases.each do |p| %>
+    <div><%= p.date %></div>
+    <div><%= p.item %></div>
+    <div><%= p.quantity %></div>
+    <div><%= p.unit_price %></div>
+    <div><%= p.total_cost %></div>
+  <% end %>
+</div>
+
+<p><strong>Итого: <%= @total_materials %> </strong></p>
+<p><strong>Итого: <%= number_to_currency(@total_materials) %></strong></p>
+
+<h3>Итоги за <%= Date::MONTHNAMES[@month] %> <%= @year %> года</h3>
+<ul>
+  <li>Коммунальные расходы: <%= number_to_currency(@total_utilities) %></li>
+  <li>Закупки материалов: <%= number_to_currency(@total_materials) %></li>
+  <li><strong>Общая сумма расходов: <%= number_to_currency(@grand_total) %></strong></li>

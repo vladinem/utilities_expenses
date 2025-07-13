@@ -1,0 +1,10 @@
+<h1>Закупка: <%= @material_purchase.item %></h1>
+
+<ul>
+  <li><strong>Дата:</strong> <%= @material_purchase.date %></li>
+  <li><strong>Количество:</strong> <%= @material_purchase.quantity %></li>
+  <li><strong>Цена за единицу:</strong> <%= @material_purchase.unit_price %></li>
+  <li><strong>Общая сумма:</strong> <%= @material_purchase.total_cost %></li>
+</ul>
+
+<%= link_to "Назад к списку", material_purchases_path %>

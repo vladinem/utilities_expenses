@@ -1,0 +1,34 @@
+
+<h1>Добавить расход</h1>
+
+<%= render "form", utility_reading: @utility_reading %>
+
+<%= link_to "← Назад", utility_readings_path %>
+<h1>Редактировать расход</h1>
+
+
+<h1>Новая закупка материала</h1>
+
+<%= form_with model: @material_purchase do |form| %>
+  <div>
+    <%= form.label :item, "Наименование" %><br>
+    <%= form.text_field :item %>
+  </div>
+
+  <div>
+    <%= form.label :date, "Дата покупки" %><br>
+    <%= form.date_field :date %>
+  </div>
+
+  <div>
+    <%= form.label :quantity, "Количество" %><br>
+    <%= form.number_field :quantity %>
+  </div>
+
+  <div>
+    <%= form.label :unit_price, "Цена за единицу" %><br>
+    <%= form.number_field :unit_price, step: 0.01 %>
+  </div>
+
+  <%= form.submit "Сохранить" %>
+<% end %>

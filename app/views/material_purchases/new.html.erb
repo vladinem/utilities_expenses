@@ -1,0 +1,25 @@
+<h1>Закупки материалов</h1>
+<%= link_to "Новая закупка", new_material_purchase_path %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Дата</th>
+      <th>Наименование</th>
+      <th>Количество</th>
+      <th>Цена</th>
+      <th>Сумма</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @material_purchases.each do |purchase| %>
+      <tr>
+        <td><%= purchase.date %></td>
+        <td><%= purchase.item %></td>
+        <td><%= purchase.quantity %></td>
+        <td><%= purchase.unit_price %></td>
+        <td><%= purchase.total_cost %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

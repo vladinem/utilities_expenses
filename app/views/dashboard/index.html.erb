@@ -1,0 +1,89 @@
+<h1>Домашняя страница учёта расходов</h1>
+<h2>Фильтрация по дате</h2>
+
+<%= form_with url: root_path, method: :get, local: true do |form| %>
+  <label>Месяц:</label>
+  <%= form.select :month, Date::MONTHNAMES.compact.each_with_index.map { |name, i| [name, i + 1] }, selected: params[:month].to_i %>
+
+  <label>Год:</label>
+  <%= form.select :year, (2022..Date.today.year).to_a.reverse, selected: params[:year].to_i %>
+
+  <%= form.submit "Показать" %>
+<% end %>
+<% if params[:month].present? && params[:year].present? %>
+  <p><strong>Показаны записи за <%= Date::MONTHNAMES[params[:month].to_i] %> <%= params[:year] %> г.</strong></p>
+<% end %>
+
+<h2>Коммунальные расходы</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Ресурс</th>
+      <th>Дата</th>
+      <th>Объём</th>
+      <th>Цена</th>
+      <th>Сумма</th>
+      <th>Действия</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @utility_readings.each do |reading| %>
+      <tr>
+        <td><%= reading.resource %></td>
+        <td><%= reading.date %></td>
+        <td><%= reading.value %></td>
+        <td><%= reading.unit_price %></td>
+        <td><%= reading.total_cost %></td>
+        <td>
+          <%= link_to "✏️", edit_utility_reading_path(reading) %>
+          <%= button_to "🗑", utility_reading_path(reading),
+                        method: :delete,
+                        data: { confirm: "Удалить запись?" },
+                        form: { style: "display:inline" } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h3>Добавить коммунальный расход</h3>
+<%= render partial: "utility_readings/form", locals: { utility_reading: @new_utility_reading } %>
+
+<hr>
+
+<h2>Закупки материалов</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Наименование</th>
+      <th>Дата</th>
+      <th>Количество</th>
+      <th>Цена</th>
+      <th>Сумма</th>
+      <th>Действия</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @material_purchases.each do |purchase| %>
+      <tr>
+        <td><%= purchase.item %></td>
+        <td><%= purchase.date %></td>
+        <td><%= purchase.quantity %></td>
+        <td><%= purchase.unit_price %></td>
+        <td><%= purchase.total_cost %></td>
+        <td>
+          <%= link_to "✏️", edit_material_purchase_path(purchase) %>
+          <%= button_to "🗑", material_purchase_path(purchase),
+                        method: :delete,
+                        data: { confirm: "Удалить запись?" },
+                        form: { style: "display:inline" } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h3>Добавить материал</h3>
+<%= render partial: "material_purchases/form", locals: { material_purchase: @new_material_purchase } %>
