@@ -1,6 +1,6 @@
 class UtilityReading < ApplicationRecord
-  def total_cost
-    value * unit_price
+   def total_cost
+    value.to_f * unit_price.to_f
   end
 
   def self.filter_by(month:, year:, resource: nil)

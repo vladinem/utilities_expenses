@@ -35,7 +35,7 @@
   <% end %>
 </div>
 
-<p><strong>Итого: <%= @total_utilities %> </strong></p>
+<p><strong>Итого: <%= "#{@total_utilities.round(2)} RSD" %> </strong></p>
 
 <hr>
 
@@ -56,11 +56,13 @@
   <% end %>
 </div>
 
-<p><strong>Итого: <%= @total_materials %> </strong></p>
-<p><strong>Итого: <%= number_to_currency(@total_materials) %></strong></p>
+<p><strong>Итого: <%= "#{@total_materials.round(2)} RSD" %> </strong></p>
+
 
 <h3>Итоги за <%= Date::MONTHNAMES[@month] %> <%= @year %> года</h3>
 <ul>
-  <li>Коммунальные расходы: <%= number_to_currency(@total_utilities) %></li>
-  <li>Закупки материалов: <%= number_to_currency(@total_materials) %></li>
-  <li><strong>Общая сумма расходов: <%= number_to_currency(@grand_total) %></strong></li>
+  <li>Коммунальные расходы: <%= "#{@total_utilities.round(2)} RSD" %></li>
+
+  <li>Закупки материалов: <%= "#{@total_materials.round(2)} RSD" %></li>
+  <li><strong>Общая сумма расходов: <%= number_to_currency(@grand_total, unit: "RSD ", format: "%n %u") %></strong> </li>
+</ul>

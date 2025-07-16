@@ -9,74 +9,6 @@
 <hr>
 
 <h2>Коммунальные расходы</h2>
-<table>
-  <thead>
-    <tr>
-      <th>Ресурс</th>
-      <th>Дата</th>
-      <th>Объём</th>
-      <th>Цена</th>
-      <th>Сумма</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @utility_readings.each do |r| %>
-      <tr>
-        <td><%= r.resource %></td>
-        <td><%= r.date.strftime("%d.%m.%Y") %></td>
-        <td><%= r.value %></td>
-        <td><%= r.unit_price %></td>
-        <td><%= r.total_cost %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-<p><strong>Итого по коммунальным расходам: <%= @total_utility %></strong></p>
-
-<hr>
-
-<h2>Закупки материалов</h2>
-<table>
-  <thead>
-    <tr>
-      <th>Наименование</th>
-      <th>Дата</th>
-      <th>Количество</th>
-      <th>Цена</th>
-      <th>Сумма</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @material_purchases.each do |p| %>
-      <tr>
-        <td><%= p.item %></td>
-        <td><%= p.date.strftime("%d.%m.%Y") %></td>
-        <td><%= p.quantity %></td>
-        <td><%= p.unit_price %></td>
-        <td><%= p.total_cost %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-<p><strong>Итого по закупкам материалов: <%= @total_materials %></strong></p>
----
-<h1>Отчёт за <%= @year %> год</h1>
-
-<%= form_with url: yearly_report_path, method: :get, local: true do |f| %>
-  <div style="display: flex; gap: 1em;">
-    <div>
-      <%= label_tag :year, "Год" %>
-      <%= number_field_tag :year, @year %>
-    </div>
-    <div style="align-self: flex-end;">
-      <%= submit_tag "Показать" %>
-    </div>
-  </div>
-<% end %>
-
-<hr>
-
-<h2>Коммунальные расходы</h2>
 <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.5em;">
   <strong>Дата</strong>
   <strong>Ресурс</strong>
@@ -93,7 +25,7 @@
   <% end %>
 </div>
 
-<p><strong>Итого по коммунальным расходам: <%= number_to_currency(@total_utilities) %></strong></p>
+<p><strong>Итого по коммунальным расходам: <%= "#{@total_utilities.round(2)} RSD" %></strong></p>
 
 <hr>
 
@@ -114,10 +46,13 @@
   <% end %>
 </div>
 
-<p><strong>Итого по материалам: <%= number_to_currency(@total_materials) %></strong></p>
+<p><strong>Итого по материалам: <%= "#{@total_materials.round(2)} RSD" %></strong></p>
+
 
 <hr>
 
-<h3>Общая сумма расходов за <%= @year %> год: <%= number_to_currency(@grand_total) %></h3>
+<h3>Общая сумма расходов за <%= @year %> год: <%= number_to_currency(@grand_total, unit: "RSD ", format: "%n %u") %>
+
+</h3>
 
 <%= link_to "← Назад", root_path %>
